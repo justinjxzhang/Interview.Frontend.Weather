@@ -27,9 +27,9 @@ class FeWeatherCard extends LitElement {
         }
     `;
 
-   async updated(changed) {
+    updated(changed) {
         if (changed.has('latitude') || changed.has('longitude')) {
-            this._weatherData = await getForecast(this.latitude, this.longitude);
+            this._weatherData = getForecast(this.latitude, this.longitude);
         }
     }
 
