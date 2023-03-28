@@ -1,8 +1,6 @@
-export function getForecast(latitude, longitude) {
-    // https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m,apparent_temperature,rain,showers&timeformat=unixtime
-    return new Promise((res) => {
-        res(londonForecast);
-    });
+export async function getForecast(latitude, longitude) {
+    // _https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m,apparent_temperature,rain,showers&timeformat=unixtime
+    return londonForecast;
 }
 
 const londonForecast = {

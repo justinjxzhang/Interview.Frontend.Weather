@@ -22,7 +22,7 @@ class FeWeather extends LitElement {
   };
 
 
-  countryLatLong = {
+  cityLatLong = {
     'London': [51.507351, -0.127758],
     'Edinburgh': [55.953251, -3.188267],
     'New York': [40.712776, -74.005974],
@@ -59,8 +59,8 @@ class FeWeather extends LitElement {
         ${this._weatherCities.map(c => html`
           <fe-weather-card
             label="${c}"
-            latitude="${this.countryLatLong[c][0]}"
-            longitude="${this.countryLatLong[c][1]}"
+            latitude="${this.cityLatLong[c][0]}"
+            longitude="${this.cityLatLong[c][1]}"
           ></fe-weather-card>
         `)}
       </div>
