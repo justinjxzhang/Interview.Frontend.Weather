@@ -1,4 +1,5 @@
 export function getForecast(latitude, longitude) {
+    // TODO: Pull live data from this API instead of returning static data every time
     // _https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m,apparent_temperature,rain,showers&timeformat=unixtime
     return londonForecast;
 }
