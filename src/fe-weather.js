@@ -36,9 +36,13 @@ class FeWeather extends LitElement {
   }
 
   addCountry() {
-    const newCountry = this.shadowRoot.querySelector("select#city").value;
-    this._weatherCities = [...this._weatherCities, newCountry];
-    console.log(this._weatherCities);
+    const city = this.shadowRoot.querySelector("select#city").value;
+    const id = crypto.randomUUID();
+    this._weatherCities = [...this._weatherCities, { id, city} ];
+  }
+
+  removeCountry(cityId) {
+    this._weatherCities = [...this._weatherCities.filter(x => x.id != cityId)];
   }
 
   render() {
@@ -56,13 +60,19 @@ class FeWeather extends LitElement {
       </div>
 
       <div class="cards">
-        ${this._weatherCities.map(c => html`
-          <fe-weather-card
-            label="${c}"
-            latitude="${this.cityLatLong[c][0]}"
-            longitude="${this.cityLatLong[c][1]}"
-          ></fe-weather-card>
-        `)}
+        ${this._weatherCities.map(c => {
+            const { id, city } = c;
+            return html`
+            <fe-weather-card
+              label="${c}"
+              id="${id}"
+              latitude="${this.cityLatLong[city][0]}"
+              longitude="${this.cityLatLong[city][1]}"
+              .onRemove="${this.removeCountry}"
+            ></fe-weather-card>
+          `
+        })
+        }
       </div>
     `;
   }

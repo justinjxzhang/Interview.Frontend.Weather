@@ -3,9 +3,11 @@ import { getForecast } from './weatherApi';
 
 class FeWeatherCard extends LitElement {
     static properties = {
+        id: { type: String },
         latitude: { type: Number },
         longitude: { type: Number },
         label: { type: String },
+        onRemove: { attribute: false },
         _weatherData: { attribute: false, state: true }
     }
 
@@ -78,6 +80,7 @@ class FeWeatherCard extends LitElement {
                         </div>
                     `)}
                 </div>
+                <button @click="${() => this.onRemove(this.id)}">Remove</button>
             </div>
         `;
     }
