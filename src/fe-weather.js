@@ -64,7 +64,7 @@ class FeWeather extends LitElement {
             const { id, city } = c;
             return html`
             <fe-weather-card
-              label="${c}"
+              label="${city}"
               id="${id}"
               latitude="${this.cityLatLong[city][0]}"
               longitude="${this.cityLatLong[city][1]}"
