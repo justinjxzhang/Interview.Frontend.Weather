@@ -14,8 +14,8 @@ class FeWeatherCard extends LitElement {
     static styles = css`
         div.card {
             border: 1px solid gray;
-            border-radius: .5em;
-            padding: 1em;
+            border-radius: .5rem;
+            padding: 1rem;
         }
 
         div.daily-forecast {
@@ -26,6 +26,22 @@ class FeWeatherCard extends LitElement {
         
         div.daily-forecast > div {
             flex: 1;
+        }
+
+        th, td {
+            padding: .5rem 2rem;
+        }
+
+        sl-card, table {
+            width: 100%;
+        }
+        
+        .header {
+            display:flex;
+            flex-direction: row;
+            gap: var(--grid-gap);
+            justify-content: space-between;
+            align-items: center
         }
     `;
 
@@ -59,29 +75,35 @@ class FeWeatherCard extends LitElement {
             }, {});
     }
 
-    formatEpochString(epoch) {
-        return new Date(epoch * 1000).toLocaleString();
-    }
-
     render() {
-        const {0: start, length: l, [l - 1]: end } = this._weatherData?.hourly.time ?? [];
-        console.log(this.dayGroupedTemps, this.dayGroupedRain);
         return html`
-            <div class="card">
-                <h4>${this.label}<pre>${this.latitude}, ${this.longitude}</pre></h4>
-                <h5>${this.formatEpochString(start)} to ${this.formatEpochString(end)}</h5>
-                <div class="daily-forecast">
-                    ${Object.entries(this.dayGroupedTemps).map(([dt, v]) => html`
-                        <div class="card">
-                            <h4>${new Date(parseInt(dt)).toLocaleDateString()}</h4>
-                            <p>High: ${Math.max(...v)}</p>
-                            <p>Low: ${Math.min(...v)}</p>
-                            <p>Rain expected: ${this.dayGroupedRain[dt].some(r => r > 0)}</p>
-                        </div>
-                    `)}
+            <sl-card>
+                <div slot="header" class="header">
+                    <h4>${this.label}</h4>
+                    <sl-button @click="${() => this.onRemove(this.id)}" variant="danger">Remove</sl-button>
                 </div>
-                <button @click="${() => this.onRemove(this.id)}">Remove</button>
-            </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>High</th>
+                            <th>Low</th>
+                            <th>Rain</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${Object.entries(this.dayGroupedTemps).map(([dt, v]) => html`
+                        <tr>
+                            <td>${new Date(parseInt(dt)).toLocaleDateString()}</td>
+                            <td>${Math.max(...v)}</td>
+                            <td>${Math.min(...v)}</td>
+                            <td>${this.dayGroupedRain[dt].some(r => r > 0)}</td>
+                        </tr>
+                        `)}
+                    </tbody>
+                </table>
+            </sl-card>
         `;
     }
 }

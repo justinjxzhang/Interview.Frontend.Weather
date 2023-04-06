@@ -15,6 +15,21 @@ class FeWeather extends LitElement {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--grid-gap);
     }
+
+    form.horizontal {
+      display: flex;
+      flex-direction: row;
+      gap: var(--grid-gap);
+      align-items: end;
+    }
+
+    form.full-width {
+      width: 100%;
+    }
+
+    #city {
+      flex: 1;
+    }
   `;
   
   static properties = {
@@ -25,8 +40,8 @@ class FeWeather extends LitElement {
   cityLatLong = {
     'London': [51.507351, -0.127758],
     'Edinburgh': [55.953251, -3.188267],
-    'New York': [40.712776, -74.005974],
-    'San Francisco': [37.774929, -122.419418],
+    'NewYork': [40.712776, -74.005974],
+    'SanFrancisco': [37.774929, -122.419418],
     'Delhi': [28.7041, 77.1025]
   }
 
@@ -36,7 +51,7 @@ class FeWeather extends LitElement {
   }
 
   addCountry() {
-    const city = this.shadowRoot.querySelector("select#city").value;
+    const city = this.shadowRoot.querySelector("sl-select#city").value;
     const id = crypto.randomUUID();
     this._weatherCities = [...this._weatherCities, { id, city} ];
   }
@@ -47,17 +62,16 @@ class FeWeather extends LitElement {
 
   render() {
     return html`
-      <div>
-        <label for="city">City</label>
-        <select id="city">
-          <option value="London">London</option>
-          <option value="Edinburgh">Edinburgh</option>
-          <option value="New York">New York</option>
-          <option value="San Francisco">San Francisco</option>
-          <option value="Delhi">Delhi</option>
-        </select>
-        <button @click="${() => this.addCountry()}">Add</button>
-      </div>
+      <form class="horizontal full-width">
+        <sl-select id="city" label="City">
+          <sl-option value="London">London</sl-option>
+          <sl-option value="Edinburgh">Edinburgh</sl-option>
+          <sl-option value="NewYork">NewYork</sl-option>
+          <sl-option value="SanFrancisco">SanFrancisco</sl-option>
+          <sl-option value="Delhi">Delhi</sl-option>
+        </sl-select>
+        <sl-button @click="${this.addCountry}">Add</sl-button>
+      </form>
 
       <div class="cards">
         ${this._weatherCities.map(c => {
@@ -71,8 +85,7 @@ class FeWeather extends LitElement {
               .onRemove="${this.removeCountry}"
             ></fe-weather-card>
           `
-        })
-        }
+        })}
       </div>
     `;
   }
